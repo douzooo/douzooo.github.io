@@ -1,2 +1,2 @@
 # douzooo.github.io
-Docs for api
+Create your own Plugin today
