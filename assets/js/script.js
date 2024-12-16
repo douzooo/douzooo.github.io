@@ -1,31 +1,41 @@
-const ball = document.getElementById("ball");
-const hoverables = document.querySelectorAll('.hoverable');
+var devCycle = 0;
+var devTypes = ["Java", "Web"];
+var eDevCycle = document.getElementById("developerTypeCycle");
 
-document.body.addEventListener('mousemove', onMouseMove);
 
-for (let i = 0; i < hoverables.length; i++) {
-    hoverables[i].addEventListener('mouseenter', onHover);
-    hoverables[i].addEventListener('mouseleave', onMouseHoverOut);
+function typewriterEffect(text, callback) {
+    let i = 0;
+    let typingInterval = setInterval(() => {
+        eDevCycle.innerHTML += text[i];
+        i++;
+        if (i >= text.length) {
+            clearInterval(typingInterval);
+            if (callback) callback();
+        }
+    }, 100);
 }
 
-function onMouseMove(e) {
-    console.log("Some");
-    TweenMax.to(ball, 0.4, {
-        x: e.pageX - 15,
-        y: e.pageY - 15,
+function deleteEffect(callback) {
+    let currentText = eDevCycle.innerHTML;
+    let i = currentText.length;
+    let deletingInterval = setInterval(() => {
+        eDevCycle.innerHTML = currentText.substring(0, i - 1);
+        i--;
+        if (i <= 0) {
+            clearInterval(deletingInterval);
+            if (callback) callback();
+        }
+    }, 100); 
+}
+
+
+function cycleDevTypes() {
+    deleteEffect(() => {
+        devCycle = (devCycle + 1) % devTypes.length;
+        typewriterEffect(devTypes[devCycle], () => {
+            setTimeout(cycleDevTypes, 3000); 
+        });
     });
 }
 
-function onHover(e) {
-    console.log("Hover");
-    TweenMax.to(ball, 0.3, {
-        scale: 4
-    });
-}
-
-function onMouseHoverOut(e) {
-    console.log("UnHover");
-    TweenMax.to(ball, 0.3, {
-        scale: 1
-    });
-}
+window.addEventListener("load", cycleDevTypes);
