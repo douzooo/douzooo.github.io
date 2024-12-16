@@ -38,4 +38,27 @@ function cycleDevTypes() {
     });
 }
 
+
+// Modal functionality for Kick bounty
+document.addEventListener("DOMContentLoaded", () => {
+    const kickBounty = document.querySelector('#kick');
+    const modal = document.getElementById("kickModal");
+    const closeBtn = modal.querySelector(".close");
+
+    kickBounty.addEventListener("click", () => {
+        modal.style.display = "block";
+    });
+
+    closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+
 window.addEventListener("load", cycleDevTypes);
